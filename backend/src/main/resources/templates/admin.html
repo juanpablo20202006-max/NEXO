@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Tienda Online</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <!-- Inclusión de la Barra de Navegación Reutilizable -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Encabezado del Panel -->
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <span>⚙️</span> Panel Administrativo
+                </h1>
+                <p class="page-subtitle">
+                    ¡Bienvenido, <strong sec:authentication="name" class="user-name-highlight">Administrador</strong>! Como Administrador cuentas con privilegios absolutos para auditar y operar en toda la plataforma.
+                </p>
+            </div>
+            <div>
+                <span class="badge badge-admin" style="font-size: 0.9rem; padding: 0.4rem 0.85rem;">
+                    Rol Supremo: ROLE_ADMIN
+                </span>
+            </div>
+        </header>
+
+        <!-- Banner de Acceso Total Exclusivo del Administrador -->
+        <section class="alerta alerta-info" style="margin-bottom: 2rem; border-left: 5px solid var(--color-primary);">
+            <div style="font-size: 1.5rem;">👑</div>
+            <div>
+                <strong style="font-size: 1.05rem;">Principio de Privilegio Completo (Superusuario):</strong>
+                <p style="margin-top: 0.25rem; font-size: 0.925rem;">
+                    En la configuración de Spring Security 6 (<code>SecurityConfig.java</code>), las rutas
+                    <code>/cliente/**</code> y <code>/vendedor/**</code> emplean <code>hasAnyRole('...', 'ADMIN')</code>.
+                    Por lo tanto, el Administrador tiene acceso garantizado a todos los módulos de la tienda sin restricciones.
+                </p>
+            </div>
+        </section>
+
+        <!-- Tarjetas de Accesos Directos a los Módulos -->
+        <section style="margin-bottom: 2.5rem;">
+            <h2 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 1.25rem;">Accesos Directos a Todos los Módulos</h2>
+            <div class="grid-3">
+                <!-- Tarjeta Cliente -->
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-indigo">🛍️</div>
+                        <span class="badge badge-cliente" style="margin-bottom: 0.5rem;">hasAnyRole('CLIENTE', 'ADMIN')</span>
+                        <h3 class="card-title">Módulo Cliente</h3>
+                        <p class="card-text">Permite verificar el catálogo y flujo de compras desde la perspectiva del usuario final.</p>
+                    </div>
+                    <a th:href="@{/cliente}" class="btn btn-outline btn-block">
+                        <span>Acceder a Cliente</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Tarjeta Vendedor -->
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-amber">📦</div>
+                        <span class="badge badge-vendedor" style="margin-bottom: 0.5rem;">hasAnyRole('VENDEDOR', 'ADMIN')</span>
+                        <h3 class="card-title">Módulo Vendedor</h3>
+                        <p class="card-text">Permite gestionar inventario, publicar artículos y consultar transacciones comerciales.</p>
+                    </div>
+                    <a th:href="@{/vendedor}" class="btn btn-outline btn-block">
+                        <span>Acceder a Vendedor</span> &rarr;
+                    </a>
+                </div>
+
+                <!-- Tarjeta Admin -->
+                <div class="card" style="border: 2px solid var(--color-primary);">
+                    <div>
+                        <div class="card-icon-wrap card-icon-rose">⚙️</div>
+                        <span class="badge badge-admin" style="margin-bottom: 0.5rem;">hasRole('ADMIN')</span>
+                        <h3 class="card-title">Módulo Admin</h3>
+                        <p class="card-text">Panel actual de configuración del sistema, gobernanza de roles y seguridad.</p>
+                    </div>
+                    <a th:href="@{/admin}" class="btn btn-primary btn-block">
+                        <span>Panel Actual</span> &check;
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Matriz de Roles y Control de Acceso (RBAC) -->
+        <section style="margin-bottom: 2.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h2 style="font-size: 1.4rem; font-weight: 700;">Matriz de Autorización y Roles del Sistema</h2>
+                <span class="badge badge-info">Spring Security 6</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Rol del Sistema</th>
+                            <th>Autoridad Concedida</th>
+                            <th>Rutas Permitidas</th>
+                            <th>Nivel de Acceso</th>
+                            <th>Usuario Demo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong style="color: #991b1b;">ADMINISTRADOR</strong></td>
+                            <td><code>ROLE_ADMIN</code></td>
+                            <td><code>/**</code> (Todas las rutas)</td>
+                            <td><span class="badge badge-admin">Total / Ilimitado</span></td>
+                            <td><code>admin</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #92400e;">VENDEDOR</strong></td>
+                            <td><code>ROLE_VENDEDOR</code></td>
+                            <td><code>/</code>, <code>/vendedor/**</code>, <code>/login</code></td>
+                            <td><span class="badge badge-vendedor">Comercial e Inventario</span></td>
+                            <td><code>vendedor</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong style="color: #1e40af;">CLIENTE</strong></td>
+                            <td><code>ROLE_CLIENTE</code></td>
+                            <td><code>/</code>, <code>/cliente/**</code>, <code>/login</code></td>
+                            <td><span class="badge badge-cliente">Catálogo y Pedidos</span></td>
+                            <td><code>cliente</code></td>
+                        </tr>
+                        <tr>
+                            <td><strong>PÚBLICO / ANÓNIMO</strong></td>
+                            <td><code>IS_AUTHENTICATED_ANONYMOUSLY</code></td>
+                            <td><code>/</code>, <code>/login</code>, <code>/acceso-denegado</code>, <code>/css/**</code></td>
+                            <td><span class="badge badge-info">Solo Lectura Pública</span></td>
+                            <td><em>Sin autenticar</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Tienda Spring Boot - Módulo de Administración Global</span>
+            <span>Usuario activo: <strong sec:authentication="name">Administrador</strong></span>
+        </div>
+    </footer>
+
+</body>
+</html>

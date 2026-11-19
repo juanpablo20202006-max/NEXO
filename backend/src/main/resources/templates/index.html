@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online - Sistema de Gestión de Roles</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <!-- Inclusión de la Barra de Navegación Reutilizable -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Hero Banner Principal -->
+        <section class="hero-banner">
+            <span class="hero-pill">Arquitectura Spring Boot 3 &amp; Security 6</span>
+            <h1 class="hero-title">Sistema de Gestión y Comercio Electrónico</h1>
+            <p class="hero-description">
+                Plataforma académica diseñada para demostrar el control de acceso basado en roles (RBAC),
+                autenticación segura con BCrypt, sesiones con protección CSRF y renderizado dinámico con Thymeleaf.
+            </p>
+            <div class="hero-actions">
+                <a th:href="@{/login}" class="btn btn-primary btn-lg" sec:authorize="isAnonymous()">
+                    <span>🔐</span> Iniciar Sesión en la Tienda
+                </a>
+                <a th:href="@{/redirigir}" class="btn btn-primary btn-lg" sec:authorize="isAuthenticated()">
+                    <span>🚀</span> Ir a mi Panel de Control
+                </a>
+                <a href="#modulos" class="btn btn-secondary btn-lg">
+                    <span>📚</span> Explorar Módulos
+                </a>
+            </div>
+        </section>
+
+        <!-- Información Académica del Sistema -->
+        <section style="margin-bottom: 2.5rem;">
+            <div class="card" style="background: linear-gradient(to right, #f8fafc, #ffffff); border-left: 4px solid var(--color-primary);">
+                <h2 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--color-primary);">
+                    🎓 Proyecto Académico - Frameworks Web
+                </h2>
+                <p style="color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 0.75rem;">
+                    Este aplicativo implementa un modelo de seguridad multi-rol empresarial utilizando <strong>Spring Security 6</strong> y <strong>PostgreSQL</strong>.
+                    Los roles disponibles en el sistema son:
+                </p>
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <span class="badge badge-cliente">CLIENTE (ROLE_CLIENTE)</span>
+                    <span class="badge badge-vendedor">VENDEDOR (ROLE_VENDEDOR)</span>
+                    <span class="badge badge-admin">ADMIN (ROLE_ADMIN - Acceso Total)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tarjetas de Módulos del Sistema -->
+        <section id="modulos">
+            <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 1.5rem; letter-spacing: -0.02em;">
+                Módulos y Niveles de Acceso
+            </h2>
+
+            <div class="grid-3">
+                <!-- Tarjeta Cliente -->
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-indigo">
+                            <span>🛍️</span>
+                        </div>
+                        <span class="badge badge-cliente" style="margin-bottom: 0.75rem;">Nivel Cliente</span>
+                        <h3 class="card-title">Módulo del Cliente</h3>
+                        <p class="card-text">
+                            Espacio dedicado a compradores para visualizar el catálogo comercial de artículos,
+                            historial de compras personales y seguimiento en tiempo real del estado de sus pedidos.
+                        </p>
+                    </div>
+                    <div>
+                        <a th:href="@{/cliente}" class="btn btn-outline btn-block">
+                            Ingresar a Cliente &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Vendedor -->
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-amber">
+                            <span>📦</span>
+                        </div>
+                        <span class="badge badge-vendedor" style="margin-bottom: 0.75rem;">Nivel Comercial</span>
+                        <h3 class="card-title">Módulo del Vendedor</h3>
+                        <p class="card-text">
+                            Panel para la administración y publicación de inventario de productos, registro de nuevos
+                            artículos para la venta y métricas de facturación reciente.
+                        </p>
+                    </div>
+                    <div>
+                        <a th:href="@{/vendedor}" class="btn btn-outline btn-block">
+                            Ingresar a Vendedor &rarr;
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Tarjeta Administrador -->
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-rose">
+                            <span>⚙️</span>
+                        </div>
+                        <span class="badge badge-admin" style="margin-bottom: 0.75rem;">Acceso Total</span>
+                        <h3 class="card-title">Módulo Administrador</h3>
+                        <p class="card-text">
+                            Control supremo del sistema. Supervisión global de usuarios, monitoreo de seguridad de accesos
+                            y capacidad para auditar e interactuar con todos los módulos.
+                        </p>
+                    </div>
+                    <div>
+                        <a th:href="@{/admin}" class="btn btn-outline btn-block">
+                            Ingresar a Admin &rarr;
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Tienda Spring Boot - Laboratorio de Seguridad y Frameworks Web</span>
+            <span>Desarrollado con Spring Boot 3.3.5 &bull; Thymeleaf &bull; Spring Security 6</span>
+        </div>
+    </footer>
+
+</body>
+</html>

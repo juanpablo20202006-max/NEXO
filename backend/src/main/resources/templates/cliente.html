@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Cliente - Tienda Online</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <!-- Inclusión de la Barra de Navegación Reutilizable -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Encabezado del Panel -->
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <span>🛍️</span> Panel del Cliente
+                </h1>
+                <p class="page-subtitle">
+                    ¡Bienvenido, <strong sec:authentication="name" class="user-name-highlight">Cliente</strong>! Aquí puedes explorar productos, gestionar tus pedidos y consultar tu historial.
+                </p>
+            </div>
+            <div>
+                <span class="badge badge-cliente" style="font-size: 0.9rem; padding: 0.4rem 0.85rem;">
+                    Rol Activo: CLIENTE
+                </span>
+            </div>
+        </header>
+
+        <!-- Métricas Rápidas del Cliente -->
+        <section class="grid-3" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-indigo" style="margin-bottom: 0;">🛒</div>
+                <div>
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Compras Realizadas</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-emerald" style="margin-bottom: 0;">🚚</div>
+                <div>
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Pedido en Camino</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-amber" style="margin-bottom: 0;">⭐</div>
+                <div>
+                    <div class="stat-number">120</div>
+                    <div class="stat-label">Puntos de Fidelidad</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Catálogo de Productos Disponibles -->
+        <section style="margin-bottom: 3rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h2 style="font-size: 1.4rem; font-weight: 700;">Catálogo de Productos</h2>
+                <span class="badge badge-info">Artículos en stock</span>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-indigo">💻</div>
+                        <h3 class="card-title">Portátil Ultrabook Pro</h3>
+                        <p class="card-text">Procesador Core i7 de última generación, 16GB RAM, SSD 512GB NVMe.</p>
+                        <div style="font-size: 1.35rem; font-weight: 800; color: var(--color-primary); margin-bottom: 1rem;">
+                            $3.850.000 COP
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button">
+                        <span>Añadir al Carrito</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-emerald">🎧</div>
+                        <h3 class="card-title">Audífonos Inalámbricos ANC</h3>
+                        <p class="card-text">Cancelación activa de ruido, 30 horas de batería y sonido de alta fidelidad.</p>
+                        <div style="font-size: 1.35rem; font-weight: 800; color: var(--color-primary); margin-bottom: 1rem;">
+                            $420.000 COP
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button">
+                        <span>Añadir al Carrito</span>
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div>
+                        <div class="card-icon-wrap card-icon-amber">📱</div>
+                        <h3 class="card-title">Smartphone Alpha 5G</h3>
+                        <p class="card-text">Pantalla OLED 120Hz, cámara de 108MP, batería de 5000mAh y carga ultrarrápida.</p>
+                        <div style="font-size: 1.35rem; font-weight: 800; color: var(--color-primary); margin-bottom: 1rem;">
+                            $2.150.000 COP
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-block" type="button">
+                        <span>Añadir al Carrito</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección: Estado de Pedidos & Mis Compras -->
+        <section style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h2 style="font-size: 1.4rem; font-weight: 700;">Mis Compras y Estado de Pedidos</h2>
+                <span class="badge badge-success">Actualizado hoy</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nº Pedido</th>
+                            <th>Fecha</th>
+                            <th>Artículos</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#PED-2026-089</strong></td>
+                            <td>Hoy, 10:15 AM</td>
+                            <td>Audífonos Inalámbricos ANC (x1)</td>
+                            <td>$420.000 COP</td>
+                            <td><span class="badge badge-warning">En Tránsito 🚚</span></td>
+                            <td><a href="#" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">Rastrear</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#PED-2026-064</strong></td>
+                            <td>3 Nov 2026</td>
+                            <td>Mouse Ergonómico Inalámbrico</td>
+                            <td>$95.000 COP</td>
+                            <td><span class="badge badge-success">Entregado ✅</span></td>
+                            <td><a href="#" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">Factura</a></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#PED-2026-031</strong></td>
+                            <td>20 Oct 2026</td>
+                            <td>Teclado Mecánico RGB Switch Red</td>
+                            <td>$280.000 COP</td>
+                            <td><span class="badge badge-success">Entregado ✅</span></td>
+                            <td><a href="#" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">Factura</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Tienda Spring Boot - Módulo del Cliente</span>
+            <span>Usuario activo: <strong sec:authentication="name">Cliente</strong></span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+
+    <!-- Fragmento Reutilizable de Barra de Navegación -->
+    <header th:fragment="navbar" class="navbar-container">
+        <nav class="navbar">
+            <!-- Logo / Marca -->
+            <a th:href="@{/}" class="navbar-brand">
+                <span class="brand-icon">🛒</span>
+                <span>Tienda</span>
+            </a>
+
+            <!-- Enlaces Principales -->
+            <ul class="navbar-links">
+                <!-- Enlace Inicio: visible para todos -->
+                <li>
+                    <a th:href="@{/}" class="navbar-link">
+                        <span>🏠</span> Inicio
+                    </a>
+                </li>
+
+                <!-- Enlace Cliente: solo CLIENTE y ADMIN -->
+                <li sec:authorize="hasAnyRole('CLIENTE','ADMIN')">
+                    <a th:href="@{/cliente}" class="navbar-link">
+                        <span>🛍️</span> Cliente
+                    </a>
+                </li>
+
+                <!-- Enlace Vendedor: solo VENDEDOR y ADMIN -->
+                <li sec:authorize="hasAnyRole('VENDEDOR','ADMIN')">
+                    <a th:href="@{/vendedor}" class="navbar-link">
+                        <span>📦</span> Vendedor
+                    </a>
+                </li>
+
+                <!-- Enlace Admin: solo ADMIN -->
+                <li sec:authorize="hasRole('ADMIN')">
+                    <a th:href="@{/admin}" class="navbar-link">
+                        <span>⚙️</span> Admin
+                    </a>
+                </li>
+            </ul>
+
+            <!-- Sección de Autenticación / Perfil -->
+            <div class="navbar-auth">
+                <!-- Si el usuario es Anónimo (No autenticado) -->
+                <a th:href="@{/login}" class="btn btn-primary" sec:authorize="isAnonymous()">
+                    <span>🔐</span> Iniciar sesión
+                </a>
+
+                <!-- Si el usuario está Autenticado -->
+                <div class="navbar-auth" sec:authorize="isAuthenticated()">
+                    <div class="user-badge-wrap">
+                        <span class="user-avatar-circle">👤</span>
+                        <span>Hola, <span class="user-name-highlight" sec:authentication="name">Usuario</span></span>
+                    </div>
+
+                    <!-- Formulario POST de Cierre de Sesión con CSRF automático mediante th:action -->
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-logout">
+                            <span>🚪</span> Cerrar sesión
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+</body>
+</html>

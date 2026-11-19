@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel del Vendedor - Tienda Online</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <!-- Inclusión de la Barra de Navegación Reutilizable -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Contenido Principal -->
+    <main class="main-content">
+        <!-- Encabezado del Panel -->
+        <header class="page-header">
+            <div>
+                <h1 class="page-title">
+                    <span>📦</span> Panel del Vendedor
+                </h1>
+                <p class="page-subtitle">
+                    ¡Bienvenido, <strong sec:authentication="name" class="user-name-highlight">Vendedor</strong>! Administra el catálogo de inventario, registra productos y supervisa tus ventas.
+                </p>
+            </div>
+            <div>
+                <span class="badge badge-vendedor" style="font-size: 0.9rem; padding: 0.4rem 0.85rem;">
+                    Rol Activo: VENDEDOR
+                </span>
+            </div>
+        </header>
+
+        <!-- Métricas Rápidas Comerciales -->
+        <section class="grid-4" style="margin-bottom: 2rem;">
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-amber" style="margin-bottom: 0;">🏷️</div>
+                <div>
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Artículos Activos</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-emerald" style="margin-bottom: 0;">📈</div>
+                <div>
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Ventas del Mes</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-indigo" style="margin-bottom: 0;">💰</div>
+                <div>
+                    <div class="stat-number">$14.2M</div>
+                    <div class="stat-label">Ingresos COP</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="card-icon-wrap card-icon-rose" style="margin-bottom: 0;">⚠️</div>
+                <div>
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Stock Bajo</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dos Columnas: Registro de Artículos y Gestión de Inventario -->
+        <div class="grid-2" style="margin-bottom: 2.5rem;">
+            <!-- Formulario Simulado: Registro de Nuevo Artículo -->
+            <section class="card">
+                <div>
+                    <div class="card-icon-wrap card-icon-amber">
+                        <span>➕</span>
+                    </div>
+                    <h2 class="card-title">Registro de Artículos</h2>
+                    <p class="card-text">Agrega un nuevo producto al catálogo de la tienda para que los clientes puedan adquirirlo.</p>
+
+                    <form onsubmit="return false;">
+                        <div class="form-group">
+                            <label class="form-label" for="prod-nombre">Nombre del Producto:</label>
+                            <input type="text" id="prod-nombre" class="form-control" placeholder="Ej. Monitor Curvo 27''" value="Monitor Curvo 27'' IPS 165Hz">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="prod-categoria">Categoría:</label>
+                            <input type="text" id="prod-categoria" class="form-control" placeholder="Ej. Computación" value="Tecnología y Pantallas">
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;" class="form-group">
+                            <div>
+                                <label class="form-label" for="prod-precio">Precio (COP):</label>
+                                <input type="number" id="prod-precio" class="form-control" value="1250000">
+                            </div>
+                            <div>
+                                <label class="form-label" for="prod-stock">Stock Inicial:</label>
+                                <input type="number" id="prod-stock" class="form-control" value="15">
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-primary btn-block" style="margin-top: 0.5rem;">
+                            <span>💾 Guardar Producto</span>
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Sección: Gestión de Inventario en Alerta -->
+            <section class="card">
+                <div>
+                    <div class="card-icon-wrap card-icon-indigo">
+                        <span>📊</span>
+                    </div>
+                    <h2 class="card-title">Gestión de Inventario</h2>
+                    <p class="card-text">Supervisa los niveles de existencias actuales y atiende las alertas de reabastecimiento.</p>
+
+                    <div style="display: flex; flex-direction: column; gap: 1rem;">
+                        <div style="background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <strong>Portátil Ultrabook Pro</strong>
+                                <span class="badge badge-success">Stock: 28 u.</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--color-text-muted);">Nivel óptimo. Demanda moderada.</div>
+                        </div>
+
+                        <div style="background: #f8fafc; border: 1px solid var(--color-border); border-radius: var(--radius-md); padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <strong>Audífonos Inalámbricos ANC</strong>
+                                <span class="badge badge-success">Stock: 14 u.</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: var(--color-text-muted);">Nivel aceptable. 5 unidades vendidas esta semana.</div>
+                        </div>
+
+                        <div style="background: #fff1f2; border: 1px solid #fecdd3; border-radius: var(--radius-md); padding: 1rem;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                                <strong style="color: #9f1239;">Smartphone Alpha 5G</strong>
+                                <span class="badge badge-admin">Stock Bajo: 2 u.</span>
+                            </div>
+                            <div style="font-size: 0.85rem; color: #9f1239;">Se recomienda emitir orden de reposición prioritaria.</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Sección: Ventas Recientes -->
+        <section style="margin-bottom: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+                <h2 style="font-size: 1.4rem; font-weight: 700;">Ventas Recientes Registradas</h2>
+                <span class="badge badge-vendedor">Canal Directo</span>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID Venta</th>
+                            <th>Fecha</th>
+                            <th>Producto Vendido</th>
+                            <th>Comprador</th>
+                            <th>Total Cobrado</th>
+                            <th>Estado Pago</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>#VT-1042</strong></td>
+                            <td>Hoy 10:15</td>
+                            <td>Audífonos Inalámbricos ANC (1x)</td>
+                            <td>cliente</td>
+                            <td>$420.000 COP</td>
+                            <td><span class="badge badge-success">Aprobado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#VT-1041</strong></td>
+                            <td>Ayer 16:40</td>
+                            <td>Portátil Ultrabook Pro (1x)</td>
+                            <td>usuario_corp</td>
+                            <td>$3.850.000 COP</td>
+                            <td><span class="badge badge-success">Aprobado</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>#VT-1040</strong></td>
+                            <td>Ayer 11:20</td>
+                            <td>Smartphone Alpha 5G (1x)</td>
+                            <td>maria_rojas</td>
+                            <td>$2.150.000 COP</td>
+                            <td><span class="badge badge-success">Aprobado</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Tienda Spring Boot - Módulo del Vendedor</span>
+            <span>Usuario activo: <strong sec:authentication="name">Vendedor</strong></span>
+        </div>
+    </footer>
+
+</body>
+</html>

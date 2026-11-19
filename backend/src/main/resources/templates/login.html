@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="es"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Tienda Online</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <!-- Inclusión de la Barra de Navegación Reutilizable -->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <!-- Contenedor Principal Centrado para Autenticación -->
+    <main class="main-content auth-wrapper">
+        <div class="auth-card">
+            <!-- Encabezado de la Tarjeta de Inicio de Sesión -->
+            <div class="auth-header">
+                <div class="auth-header-icon">
+                    <span>🔐</span>
+                </div>
+                <h1 class="auth-title">Iniciar Sesión</h1>
+                <p class="auth-subtitle">Ingresa tus credenciales para acceder a tu panel</p>
+            </div>
+
+            <!-- Alerta de Error en Caso de Autenticación Fallida -->
+            <div th:if="${param.error}" class="alerta alerta-error" role="alert">
+                <span style="font-size: 1.25rem;">⚠️</span>
+                <div>
+                    <strong>Error de autenticación:</strong>
+                    <div>Usuario o contraseña incorrectos.</div>
+                </div>
+            </div>
+
+            <!-- Alerta de Éxito al Cerrar Sesión -->
+            <div th:if="${param.logout}" class="alerta alerta-exito" role="alert">
+                <span style="font-size: 1.25rem;">✅</span>
+                <div>
+                    <strong>Sesión finalizada:</strong>
+                    <div>Has cerrado sesión correctamente.</div>
+                </div>
+            </div>
+
+            <!-- Formulario de Inicio de Sesión (Spring Security formLogin) -->
+            <!-- Nota: th:action="@{/login}" inyecta automáticamente el token CSRF -->
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="username" class="form-label">Nombre de Usuario:</label>
+                    <input type="text"
+                           id="username"
+                           name="username"
+                           class="form-control"
+                           placeholder="Ej. admin, vendedor, cliente"
+                           required
+                           autofocus
+                           autocomplete="username">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.75rem;">
+                    <label for="password" class="form-label">Contraseña:</label>
+                    <input type="password"
+                           id="password"
+                           name="password"
+                           class="form-control"
+                           placeholder="••••••••"
+                           required
+                           autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-lg">
+                    <span>Ingresar</span> &rarr;
+                </button>
+            </form>
+
+            <!-- Caja Informativa con Credenciales Académicas de Laboratorio -->
+            <div class="credenciales-box">
+                <div class="credenciales-title">
+                    <span>🧪</span> Credenciales de Laboratorio (Precargadas)
+                </div>
+                <ul class="credenciales-list">
+                    <li class="credencial-item">
+                        <span><span class="badge badge-admin">Admin</span> <span class="credencial-user">admin</span></span>
+                        <span class="credencial-pass">admin123</span>
+                    </li>
+                    <li class="credencial-item">
+                        <span><span class="badge badge-vendedor">Vendedor</span> <span class="credencial-user">vendedor</span></span>
+                        <span class="credencial-pass">vend123</span>
+                    </li>
+                    <li class="credencial-item">
+                        <span><span class="badge badge-cliente">Cliente</span> <span class="credencial-user">cliente</span></span>
+                        <span class="credencial-pass">cli123</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <span>&copy; 2026 Tienda Spring Boot - Módulo de Autenticación Segura</span>
+            <a th:href="@{/}" style="color: var(--color-primary); text-decoration: none; font-weight: 600;">&larr; Volver a Inicio</a>
+        </div>
+    </footer>
+
+</body>
+</html>
